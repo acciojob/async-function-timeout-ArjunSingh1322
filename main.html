@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <head>
     <link rel="stylesheet" href="styles.css" />
@@ -6,38 +7,37 @@
     <form id="myForm">
       <input type="text" id="text" placeholder="Enter text" required />
       <input type="number" id="delay" placeholder="Enter delay (ms)" required />
-      <button type="submit">Submit</button>
+      <button type="submit" id="btn">Submit</button> <!-- ✅ Fixed missing id -->
     </form>
 
     <div id="output"></div>
 
     <script>
-     document.addEventListener("DOMContentLoaded", () => {
-  let form = document.querySelector("#myForm");
-  let output = document.querySelector("#output");
+      document.addEventListener("DOMContentLoaded", () => {
+        let form = document.querySelector("#myForm");
+        let output = document.querySelector("#output");
 
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault(); // Prevent page reload
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault();
 
-    let name = document.querySelector("#text").value;
-    let number = parseInt(document.querySelector("#delay").value, 10);
+          let name = document.querySelector("#text").value;
+          let number = parseInt(document.querySelector("#delay").value, 10);
 
-    if (isNaN(number) || number < 0) {
-      output.innerText = "Please enter a valid delay.";
-      return;
-    }
+          if (isNaN(number) || number < 0) {
+            output.innerText = "Please enter a valid delay.";
+            return;
+          }
 
-    output.innerText = ""; // Ensure it's empty before update
+          output.innerText = ""; // Ensure output is cleared before updating
 
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        output.innerText = name; // Update output after delay
-        resolve();
-      }, number);
-    });
-  });
-});
-
+          await new Promise((resolve) => {
+            setTimeout(() => {
+              output.innerText = name; // Display the text after delay
+              resolve();
+            }, number);
+          });
+        });
+      });
     </script>
   </body>
 </html>
