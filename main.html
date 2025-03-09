@@ -1,20 +1,45 @@
 <!DOCTYPE html>
-
 <html>
   <head>
     <link rel="stylesheet" href="styles.css" />
   </head>
-
   <body>
-    <!-- the entire body must be written by student -->
-    <form onsubmit="return false">
-      <input type="text" id="text" placeholder="Text" />
-      <input type="number" id="delay" placeholder="Delay" />
-      <button type="button" id="btn">Submit</button>
+    <form id="myForm">
+      <input type="text" id="text" placeholder="Enter text" required />
+      <input type="number" id="delay" placeholder="Enter delay (ms)" required />
+      <button type="submit">Submit</button>
     </form>
 
     <div id="output"></div>
 
-    <script type="text/javascript" src="./script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        let form = document.querySelector("#myForm");
+        let output = document.querySelector("#output");
+
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault(); // Prevent form from reloading the page
+
+          let name = document.querySelector("#text").value;
+          let number = parseInt(document.querySelector("#delay").value, 10);
+
+          if (isNaN(number) || number < 0) {
+            output.innerText = "Please enter a valid delay in milliseconds.";
+            return;
+          }
+
+          // Display message after delay
+          await new Promise((resolve) => {
+            setTimeout(() => {
+              output.innerText = name;
+              resolve();
+            }, number);
+          });
+
+          // Optionally reset the form after submission
+          form.reset();
+        });
+      });
+    </script>
   </body>
 </html>
