@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
   <head>
     <link rel="stylesheet" href="styles.css" />
@@ -13,33 +12,32 @@
     <div id="output"></div>
 
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        let form = document.querySelector("#myForm");
-        let output = document.querySelector("#output");
+     document.addEventListener("DOMContentLoaded", () => {
+  let form = document.querySelector("#myForm");
+  let output = document.querySelector("#output");
 
-        form.addEventListener("submit", async (event) => {
-          event.preventDefault(); // Prevent form from reloading the page
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault(); // Prevent page reload
 
-          let name = document.querySelector("#text").value;
-          let number = parseInt(document.querySelector("#delay").value, 10);
+    let name = document.querySelector("#text").value;
+    let number = parseInt(document.querySelector("#delay").value, 10);
 
-          if (isNaN(number) || number < 0) {
-            output.innerText = "Please enter a valid delay in milliseconds.";
-            return;
-          }
+    if (isNaN(number) || number < 0) {
+      output.innerText = "Please enter a valid delay.";
+      return;
+    }
 
-          // Display message after delay
-          await new Promise((resolve) => {
-            setTimeout(() => {
-              output.innerText = name;
-              resolve();
-            }, number);
-          });
+    output.innerText = ""; // Ensure it's empty before update
 
-          // Optionally reset the form after submission
-          form.reset();
-        });
-      });
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        output.innerText = name; // Update output after delay
+        resolve();
+      }, number);
+    });
+  });
+});
+
     </script>
   </body>
 </html>
